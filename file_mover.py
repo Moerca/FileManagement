@@ -28,9 +28,9 @@ video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
 audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
 # ? supported Document types
 document_extensions = [".doc", ".docx", ".odt",
-                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx", ".csv"]
+                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx", ".csv", ".txt"]
 # ? installation files / programs
-program_extensions = [".exe"]
+program_extensions = [".exe", ".msi"]
 
 
 
@@ -115,6 +115,15 @@ if __name__ == "__main__":
     event_handler = MoverHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
+    # checking files right after the start of the program
+    with scandir(source_dir) as entries:
+        for entry in entries:
+            name = entry.name
+            event_handler.check_audio_files(entry, name)
+            event_handler.check_video_files(entry, name)
+            event_handler.check_image_files(entry, name)
+            event_handler.check_document_files(entry, name)
+            event_handler.check_program_files(entry,name)
     observer.start()
     try:
         while True:
