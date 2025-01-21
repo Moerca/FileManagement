@@ -16,7 +16,7 @@ dest_dir_music="C:/Users/49151/Music/Downloaded_music"
 dest_dir_video="C:/Users/49151/Videos/Downloaded_videos"
 dest_dir_image="C:/Users/49151/Pictures/Downloaded_pics"
 dest_dir_documents ="C:/Users/49151/Documents/Downloaded_docs"
-
+dest_dir_programs ="C:/Users/49151/Documents/Downloaded_programs"
 
 # ? supported image types
 image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
@@ -29,6 +29,10 @@ audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
 # ? supported Document types
 document_extensions = [".doc", ".docx", ".odt",
                        ".pdf", ".xls", ".xlsx", ".ppt", ".pptx", ".csv"]
+# ? installation files / programs
+program_extensions = [".exe"]
+
+
 
 #checking which files are in my download file
 with os.scandir(source_dir) as entries:
@@ -66,6 +70,8 @@ class MoverHandler(FileSystemEventHandler):
                 self.check_video_files(entry, name)
                 self.check_image_files(entry, name)
                 self.check_document_files(entry, name)
+                self.check_program_files(entry, name)
+
 
     def check_audio_files(self, entry, name):  # * Checks all Audio Files
         for audio_extension in audio_extensions:
@@ -95,6 +101,11 @@ class MoverHandler(FileSystemEventHandler):
                 move_file(dest_dir_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
+    def check_program_files(self, entry, name):  # * Checks all Document Files
+        for programs_extensions in program_extensions:
+            if name.endswith(programs_extensions) or name.endswith(programs_extensions.upper()):
+                move_file(dest_dir_programs, entry, name)
+                logging.info(f"Moved program file: {name}")
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
