@@ -1,3 +1,4 @@
+import os
 from os import scandir, rename
 from os.path import splitext, exists, join
 from shutil import move
@@ -27,13 +28,13 @@ video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
 audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
 # ? supported Document types
 document_extensions = [".doc", ".docx", ".odt",
-                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx"]
+                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx", ".csv"]
 
 #checking which files are in my download file
-#with os.scandir(source_dir) as entries:
+with os.scandir(source_dir) as entries:
   #get documents from download file
-#    for entry in entries:
-#        print(entry.name)
+    for entry in entries:
+        print(entry.name)
 
 
 def make_unique(dest, name):
@@ -106,7 +107,7 @@ if __name__ == "__main__":
     observer.start()
     try:
         while True:
-            sleep(10)
+            sleep(1)
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
